@@ -10,6 +10,11 @@ var favicon = require('serve-favicon');
 app.use(express.static(__dirname));
 app.use(favicon(__dirname + '/site-assets/favicon.ico'));
 
+const PORT = 8080
+const HOST = '0.0.0.0'
+app.listen(PORT, HOST);
+console.log(`Running on http://${HOST}:${PORT}`);
+
 Object.defineProperty(module.exports, 'learnJson', {
 	set: function (backend) {
 		learnJson.backend = backend;
