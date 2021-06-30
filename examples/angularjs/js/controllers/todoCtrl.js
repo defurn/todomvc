@@ -29,14 +29,14 @@ angular.module('todomvc')
 		});
 
 		$scope.addTodo = function () {
-			var tags, title = $scope.parseTags($scope.newTodo.trim())
-
+			const parsedTitle = $scope.parseTags($scope.newTodo.trim())
+			
 			var newTodo = {
-				title: title,
+				title: parsedTitle.title,
 				completed: false,
-				tags: tags
+				tags:parsedTitle.tags
 			};
-
+			
 			if (!newTodo.title) {
 				return;
 			}
@@ -53,11 +53,20 @@ angular.module('todomvc')
 
 		$scope.parseTags = function (todoText) {
 			// not fully vetted regex...
+			let item = {}
 			let regex = /\#\S*(\s*|\#|$)/g
 			let tags = todoText.match(regex)
-			tags.map((tag) => { return tag.trim()})
-			let text = todoText.replace(regex, '').trim()
-			return tags, text
+			if (tags == null) { 
+				item.title = todoText
+				item.tags = null
+			} else {
+				tags.map((tag) => { return tag.trim()})
+				dbug.log(tags)
+				let title = todoText.replace(regex, '').trim()
+				item.title = title
+				item.tags = tags
+			}
+			return item
 		}
 
 		$scope.editTodo = function (todo) {
@@ -83,7 +92,10 @@ angular.module('todomvc')
 				return;
 			}
 
-			todo.title, todo.tags = $scope.parseTags(todo.title.trim());
+			parsedTitle = $scope.parseTags(todo.title.trim());
+
+			todo.title = parsedTitle.title
+			todo.tags = parsedTitle.tags
 
 			if ((todo.title === $scope.originalTodo.title) && (todo.title === $scope.originalTodo.title)){
 				$scope.editedTodo = null;
