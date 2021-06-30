@@ -15,7 +15,7 @@
 				<header class="header">
 					<h1>todos</h1>
 					<form class="todo-form" ng-submit="addTodo()">
-						<input class="new-todo" placeholder="What needs to be done?" ng-model="newTodo" ng-disabled="saving" autofocus>
+						<input class="new-todo" placeholder="What needs to be done? #getitdone" ng-model="newTodo" ng-disabled="saving" autofocus>
 					</form>
 				</header>
 				<section class="main" ng-show="todos.length" ng-cloak>
@@ -25,11 +25,11 @@
 						<li ng-repeat="todo in todos | filter:statusFilter track by $index" ng-class="{completed: todo.completed, editing: todo == editedTodo}">
 							<div class="view">
 								<input class="toggle" type="checkbox" ng-model="todo.completed" ng-change="toggleCompleted(todo)">
-								<label ng-dblclick="editTodo(todo)"><span ng-repeat="tag in todo.tags" style="color: #b4b4b4">|{{tag}}|</span> {{todo.title}}</label>
+								<label ng-dblclick="editTodo(todo)"><span ng-repeat="tag in todo.tags" style="color: #b4b4b4" ng-click="filterTags(tag)">|{{tag}}|</span> {{todo.title}}</label>
 								<button class="destroy" ng-click="removeTodo(todo)"></button>
 							</div>
 							<form ng-submit="saveEdits(todo, 'submit')">
-								<input class="edit" ng-trim="false" ng-model="todo.title" todo-escape="revertEdits(todo)" ng-blur="saveEdits(todo, 'blur')" todo-focus="todo == editedTodo">
+								<input class="edit" ng-trim="false" ng-model="todo.display" todo-escape="revertEdits(todo)" ng-blur="saveEdits(todo, 'blur')" todo-focus="todo == editedTodo">
 							</form>
 						</li>
 					</ul>

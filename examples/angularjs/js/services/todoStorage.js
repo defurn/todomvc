@@ -87,7 +87,7 @@ angular.module('todomvc')
 		return store;
 	})
 
-	.factory('localStorage', function ($q) {
+	.factory('localStorage', function ($q, dbug) {
 		'use strict';
 
 		var STORAGE_ID = 'todos-angularjs';
@@ -100,7 +100,9 @@ angular.module('todomvc')
 			},
 
 			_saveToLocalStorage: function (todos) {
+				// dbug.log(JSON.stringify(todos))
 				localStorage.setItem(STORAGE_ID, JSON.stringify(todos));
+
 			},
 
 			clearCompleted: function () {
@@ -140,7 +142,6 @@ angular.module('todomvc')
 
 			insert: function (todo) {
 				var deferred = $q.defer();
-
 				store.todos.push(todo);
 
 				store._saveToLocalStorage(store.todos);

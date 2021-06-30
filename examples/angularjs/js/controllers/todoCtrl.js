@@ -34,7 +34,8 @@ angular.module('todomvc')
 			var newTodo = {
 				title: parsedTitle.title,
 				completed: false,
-				tags:parsedTitle.tags
+				tags:parsedTitle.tags,
+				display: parsedTitle.display
 			};
 			
 			if (!newTodo.title) {
@@ -53,12 +54,14 @@ angular.module('todomvc')
 
 		$scope.parseTags = function (todoText) {
 			// not fully vetted regex...
-			let item = {}
+
+			let item = {display: todoText}
 			let regex = /\#\S*(\s*|\#|$)/g
 			let tags = todoText.match(regex)
 			if (tags == null) { 
 				item.title = todoText
 				item.tags = null
+
 			} else {
 				tags.map((tag) => { return tag.trim()})
 				let title = todoText.replace(regex, '').trim()
@@ -67,6 +70,13 @@ angular.module('todomvc')
 			}
 			return item
 		}
+
+		$scope.filterTags = function (tag) {
+			dbug.log('filter!')
+			return tag
+		}
+
+
 
 		$scope.editTodo = function (todo) {
 			$scope.editedTodo = todo;
@@ -91,19 +101,22 @@ angular.module('todomvc')
 				return;
 			}
 
-			parsedTitle = $scope.parseTags(todo.title.trim());
-
+			const parsedTitle = $scope.parseTags(todo.display.trim());
 			todo.title = parsedTitle.title
 			todo.tags = parsedTitle.tags
-
-			if ((todo.title === $scope.originalTodo.title) && (todo.title === $scope.originalTodo.title)){
+			todo.display = parsedTitle.display
+			
+			if (todo.display === $scope.originalTodo.display){
 				$scope.editedTodo = null;
 				return;
 			}
+			
 
 			store[todo.title ? 'put' : 'delete'](todo)
 				.then(function success() {}, function error() {
 					todo.title = $scope.originalTodo.title;
+					todo.tags = $scope.originalTodo.tags;
+					todo.display = $scope.originalTodo.display;
 				})
 				.finally(function () {
 					$scope.editedTodo = null;
