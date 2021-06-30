@@ -61,7 +61,6 @@ angular.module('todomvc')
 				item.tags = null
 			} else {
 				tags.map((tag) => { return tag.trim()})
-				dbug.log(tags)
 				let title = todoText.replace(regex, '').trim()
 				item.title = title
 				item.tags = tags
