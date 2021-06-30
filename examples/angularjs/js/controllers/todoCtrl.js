@@ -29,11 +29,13 @@ angular.module('todomvc')
 		});
 
 		$scope.addTodo = function () {
+			var tags, title = $scope.parseTags($scope.newTodo.trim())
+
 			var newTodo = {
-				title: $scope.newTodo.trim(),
-				completed: false
+				title: title,
+				completed: false,
+				tags: tags
 			};
-			dbug.log('test from add')
 
 			if (!newTodo.title) {
 				return;
@@ -48,6 +50,15 @@ angular.module('todomvc')
 					$scope.saving = false;
 				});
 		};
+
+		$scope.parseTags = function (todoText) {
+			// not fully vetted regex...
+			let regex = /\#\S*(\s*|\#|$)/g
+			let tags = todoText.match(regex)
+			tags.map((tag) => { return tag.trim()})
+			let text = todoText.replace(regex, '').trim()
+			return tags, text
+		}
 
 		$scope.editTodo = function (todo) {
 			$scope.editedTodo = todo;
@@ -65,7 +76,6 @@ angular.module('todomvc')
 			}
 
 			$scope.saveEvent = event;
-			$log('test from savedits')
 
 			if ($scope.reverted) {
 				// Todo edits were reverted-- don't save.
