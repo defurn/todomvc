@@ -83,9 +83,9 @@ angular.module('todomvc')
 				return;
 			}
 
-			todo.title = todo.title.trim();
+			todo.title, todo.tags = $scope.parseTags(todo.title.trim());
 
-			if (todo.title === $scope.originalTodo.title) {
+			if ((todo.title === $scope.originalTodo.title) && (todo.title === $scope.originalTodo.title)){
 				$scope.editedTodo = null;
 				return;
 			}
