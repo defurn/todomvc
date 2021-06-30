@@ -10,7 +10,7 @@ angular.module('todomvc')
 		'use strict';
 
 		var todos = $scope.todos = store.todos;
-
+		$scope.activeTags = [];
 		$scope.newTodo = '';
 		$scope.editedTodo = null;
 
@@ -59,22 +59,30 @@ angular.module('todomvc')
 			let regex = /\#\S*(\s*|\#|$)/g
 			let tags = todoText.match(regex)
 			if (tags == null) { 
-				item.title = todoText
+				item.title = todoText.trim()
 				item.tags = null
 
 			} else {
 				tags.map((tag) => { return tag.trim()})
 				let title = todoText.replace(regex, '').trim()
-				item.title = title
+				item.title = title.trim()
 				item.tags = tags
 			}
 			return item
 		}
 
-		$scope.filterTags = function (tag) {
-			dbug.log('filter!')
-			return tag
+		$scope.toggleFilterTags = function (tag) {
+			tag = tag.trim()
+			let i = $scope.activeTags.indexOf(tag)
+			if (i < 0) {
+				$scope.activeTags.push(tag)
+			} else {
+				$scope.activeTags.splice(i, 1) // = $scope.activeTags.replace(tag,'');
+			}
+			return $scope.activeTags
 		}
+
+
 
 
 
