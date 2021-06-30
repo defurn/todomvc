@@ -6,7 +6,7 @@
  * - exposes the model to the template and provides event handlers
  */
 angular.module('todomvc')
-	.controller('TodoCtrl', function TodoCtrl($scope, $routeParams, $filter, store) {
+	.controller('TodoCtrl', function TodoCtrl($scope, $routeParams, $filter, store, dbug) {
 		'use strict';
 
 		var todos = $scope.todos = store.todos;
@@ -33,6 +33,7 @@ angular.module('todomvc')
 				title: $scope.newTodo.trim(),
 				completed: false
 			};
+			dbug.log('test from add')
 
 			if (!newTodo.title) {
 				return;
@@ -54,6 +55,7 @@ angular.module('todomvc')
 			$scope.originalTodo = angular.extend({}, todo);
 		};
 
+
 		$scope.saveEdits = function (todo, event) {
 			// Blur events are automatically triggered after the form submit event.
 			// This does some unfortunate logic handling to prevent saving twice.
@@ -63,6 +65,7 @@ angular.module('todomvc')
 			}
 
 			$scope.saveEvent = event;
+			$log('test from savedits')
 
 			if ($scope.reverted) {
 				// Todo edits were reverted-- don't save.
