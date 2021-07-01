@@ -22,7 +22,7 @@
 					<input id="toggle-all" class="toggle-all" type="checkbox" ng-model="allChecked" ng-click="markAll(allChecked)">
 					<label for="toggle-all">Mark all as complete</label>
 					<ul class="todo-list">
-						<li ng-repeat="todo in todos | filter: filterTags(todo.tag) | filter:statusFilter track by $index " ng-class="{completed: todo.completed, editing: todo == editedTodo}">
+						<li ng-repeat="todo in todos | filter : filterTags | filter:statusFilter track by $index " ng-class="{completed: todo.completed, editing: todo == editedTodo}">
 							<div class="view">
 								<input class="toggle" type="checkbox" ng-model="todo.completed" ng-change="toggleCompleted(todo)">
 								<label ng-dblclick="editTodo(todo)"><span ng-repeat="tag in todo.tags" style="color: #b4b4b4" ng-click="toggleFilterTags(tag)"> {{tag}} </span> {{todo.title}}</label>

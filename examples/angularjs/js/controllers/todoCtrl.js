@@ -82,6 +82,19 @@ angular.module('todomvc')
 			return $scope.activeTags
 		}
 
+		$scope.filterTags = function(todo) {
+			// default is to display all tags, if filter list is empty
+			if ($scope.activeTags.length == 0) { return true }
+			if (todo.tags == null) { return false }
+			var inList = false
+			todo.tags.forEach((tag) => {
+				if ($scope.activeTags.indexOf(tag) >= 0) {
+					inList = true
+				}
+			})
+    		return inList
+		};
+
 
 
 
