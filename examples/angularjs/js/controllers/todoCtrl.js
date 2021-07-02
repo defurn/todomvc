@@ -63,16 +63,16 @@ angular.module('todomvc')
 				item.tags = null
 
 			} else {
-				tags.map((tag) => { return tag.trim()})
+				let trimTags = tags.map((tag) => { return tag.trim() })
 				let title = todoText.replace(regex, '').trim()
 				item.title = title.trim()
-				item.tags = tags
+				item.tags = trimTags
+
 			}
 			return item
 		}
 
 		$scope.toggleFilterTags = function (tag) {
-			tag = tag.trim()
 			let i = $scope.activeTags.indexOf(tag)
 			if (i < 0) {
 				$scope.activeTags.push(tag)
@@ -88,6 +88,7 @@ angular.module('todomvc')
 			if (todo.tags == null) { return false }
 			var inList = false
 			todo.tags.forEach((tag) => {
+				tag.trim()
 				if ($scope.activeTags.indexOf(tag) >= 0) {
 					inList = true
 				}
